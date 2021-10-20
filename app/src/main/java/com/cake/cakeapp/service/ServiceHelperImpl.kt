@@ -8,4 +8,5 @@ class ServiceHelperImpl  @Inject constructor(
     private val cakeService: CakeService
 ):ServiceHelper {
     override suspend fun getCakes(): Response<List<Cake>> = cakeService.getCakes()
+    override suspend fun failCakes(): Response<List<Cake>> = cakeService.failCakes()
 }

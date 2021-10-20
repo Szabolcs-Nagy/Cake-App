@@ -5,4 +5,5 @@ import retrofit2.Response
 
 interface ServiceHelper {
     suspend fun getCakes(): Response<List<Cake>>
+    suspend fun failCakes(): Response<List<Cake>>
 }

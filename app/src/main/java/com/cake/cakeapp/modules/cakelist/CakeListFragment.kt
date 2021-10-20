@@ -19,9 +19,9 @@ import kotlinx.coroutines.flow.collect
 
 
 /**
- * A simple [Fragment] subclass.
- * Use the [CakeListFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * [Fragment] subclass
+ * The [CakeListFragment.newInstance] factory method
+ * creates an instance of this fragment
  */
 
 @AndroidEntryPoint
