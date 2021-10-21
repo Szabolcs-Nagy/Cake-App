@@ -1,7 +1,9 @@
 package com.cake.cakeapp.modules.cakelist
 
 import android.graphics.ColorSpace.Model
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.cake.cakeapp.repository.CakeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +27,6 @@ class CakeListViewModel @Inject constructor(
 
     val cakes : StateFlow<CakeEvent>
         get() = _cakes
-
 
     fun fetchCakes()  = viewModelScope.launch {
         _cakes.value = CakeEvent.Loading

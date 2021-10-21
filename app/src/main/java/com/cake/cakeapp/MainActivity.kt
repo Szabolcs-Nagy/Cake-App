@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.support.annotation.NonNull
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 import com.cake.cakeapp.modules.cakelist.CakeListFragment
@@ -12,6 +13,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.cake.cakeapp.modules.cakelist.CakeListViewModel
+import java.net.SocketTimeoutException
 
 
 @AndroidEntryPoint
@@ -24,22 +26,33 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         viewModel = ViewModelProvider(this).get(CakeListViewModel::class.java)
-        // Getting reference of swipeRefreshLayout and recyclerView
+
+        /**
+         *  Getting reference of swipeRefreshLayout
+         */
         swipeLayout = findViewById<SwipeRefreshLayout>(R.id.mSwipeRefreshLayout)
         swipeLayout.setOnRefreshListener {
             viewModel.refreshData()
             swipeLayout.isRefreshing = false
         }
+
         replaceFragment(CakeListFragment.newInstance(), CakeListFragment.TAG)
-        // calling the action bar
+
+        /**
+         *  calling the action bar
+         */
         val actionBar: ActionBar? = supportActionBar
-        // showing the back button in action bar
+        /**
+         *  showing the back button in action bar
+         */
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true)
         }
     }
 
-    // function to the button on press that enables to go back
+    /**
+     *  function to the button on press that enables to go back
+     */
     override fun onOptionsItemSelected(@NonNull item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {

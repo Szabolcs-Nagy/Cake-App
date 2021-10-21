@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -26,8 +28,6 @@ import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class CakeListFragment : Fragment() {
-    private lateinit var swipeLayout: SwipeRefreshLayout
-    private lateinit var viewModel: CakeListViewModel
 
     private val cakeListViewModel: CakeListViewModel by viewModels()
 
@@ -57,10 +57,23 @@ class CakeListFragment : Fragment() {
             adapter = cakesRecycleViewAdapter
         }
         bindViewModel()
+        try{
         cakeListViewModel.fetchCakes()
+
+        }catch (exception: Exception){
+            Toast.makeText(activity, "Error connecting to the network", Toast.LENGTH_SHORT).show()
+        }
 
     }
 
+    /**
+     * Binding the View Model
+     * Here we verify which CakeEvent is true
+     * Is the event successful?
+     * Is the event loading?
+     * Did we get an error while trying to reach the network?
+     * Is the event empty?
+     */
     private  fun bindViewModel() {
 
         lifecycleScope.launchWhenStarted {
@@ -75,7 +88,7 @@ class CakeListFragment : Fragment() {
                     }
                     is CakeEvent.Error -> {
                         progressBar.visibility = View.GONE
-                        Snackbar.make(recyclerView, "Something went wrong", Snackbar.LENGTH_SHORT)
+                        Snackbar.make(recyclerView, "Failed to get response from network", Snackbar.LENGTH_SHORT)
                             .show()
                     }
                     is CakeEvent.Empty -> {
